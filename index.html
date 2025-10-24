@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitación XV Años de Natalia, y XVII Años de Santiago</title>
+  <style>
+    body {
+      font-family: 'Brush Script MT', cursive;
+      background: linear-gradient(135deg, #73c5da, #ffffff 100%);
+      margin: 0;
+      padding: 0;
+      color: #333;
+      font-size: clamp(1em, 2.5vw, 1.5em);
+      line-height: 1.3;
+    }
+
+
+    .container {
+      max-width: 650px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+      padding: clamp(18px, 5vw, 36px) clamp(8px, 4vw, 24px);
+      position: relative;
+      overflow: hidden;
+      font-size: clamp(1.1em, 3vw, 1.5em);
+    }
+
+
+    /* Flores en las esquinas */
+    .corner {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+    .corner.tl { /* Arriba izquierda */
+      top: -10px;
+      left: -10px;
+      background-image: url('flores_azules.png');
+    }
+    .corner.tr { /* Arriba derecha */
+      top: -10px;
+      right: -10px;
+      transform: scaleX(-1);
+      background-image: url('flores_azules.png');
+    }
+    .corner.bl { /* Abajo izquierda */
+      bottom: -10px;
+      left: -10px;
+      transform: scaleY(-1);
+      background-image: url('flores_azules.png');
+    }
+    .corner.br { /* Abajo derecha */
+      bottom: -10px;
+      right: -10px;
+      transform: scale(-1, -1);
+      background-image: url('flores_azules.png');
+    }
+
+
+    h1 {
+      font-family: "Brush Script MT", cursive;
+      text-align: center;
+      color: #5f71c3;
+      font-size: clamp(2em, 7vw, 3em);
+      margin-bottom: 0.3em;
+      position: relative;
+      z-index: 2;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      word-break: break-word;
+    }
+
+
+    h4 {
+      font-family: "Brush Script MT", cursive;
+      text-align: center;
+      color: #2d3869;
+      margin-bottom: 0.3em;
+      position: relative;
+      z-index: 2;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      word-break: break-word;
+    }
+
+
+    .poem {
+      font-family: 'Dancing Script', 'Brush Script MT', cursive, sans-serif;
+      font-style: italic;
+      text-align: center;
+      margin: clamp(16px, 4vw, 28px) 0 clamp(24px, 5vw, 36px) 0;
+      color: #4c8893;
+      line-height: 1.6em;
+      position: relative;
+      z-index: 2;
+      font-size: clamp(1.1em, 3vw, 1.4em);
+      word-break: break-word;
+    }
+
+
+    .parents {
+      text-align: center;
+      margin: clamp(12px, 3vw, 22px) 0 0 0;
+      color: #333;
+      font-size: clamp(1em, 2.5vw, 1.1em);
+      position: relative;
+      z-index: 2;
+    }
+
+
+    .event-details {
+      text-align: center;
+      background: #e1f2f8;
+      border-radius: 12px;
+      padding: clamp(10px, 3vw, 18px) clamp(8px, 3vw, 22px);
+      margin-bottom: clamp(12px, 3vw, 22px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      position: relative;
+      z-index: 2;
+      font-size: clamp(1em, 2.5vw, 1.1em);
+    }
+
+
+    iframe {
+      border-radius: 18px;
+      margin-top: 12px;
+      border: 2px solid #a5cfe0;
+      width: 100%;
+      height: 260px;
+    }
+
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: clamp(8px, 3vw, 18px);
+      margin: clamp(12px, 3vw, 24px) 0;
+      z-index: 2;
+      position: relative;
+      flex-wrap: wrap;
+    }
+    .countdown-item {
+      background: linear-gradient(145deg, #e6f6fa, #d9edf3);
+      border-radius: 12px;
+      padding: clamp(8px, 2vw, 14px) clamp(8px, 2vw, 18px);
+      text-align: center;
+      min-width: clamp(40px, 12vw, 70px);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+      font-size: clamp(1em, 2.5vw, 1.1em);
+    }
+    .countdown-item:hover {
+      transform: scale(1.05);
+    }
+    .countdown-item span {
+      display: block;
+      font-size: clamp(1.2em, 4vw, 1.6em);
+      color: #5fa7c3;
+      font-weight: bold;
+    }
+
+
+    .footer-text {
+      text-align: center;
+      margin-top: clamp(16px, 4vw, 28px);
+      color: #4c7f93;
+      font-size: clamp(1em, 2.5vw, 1.2em);
+      font-weight: 500;
+      z-index: 2;
+      position: relative;
+    }
+    /* Mensaje especial cuando llega el día del evento */
+    .event-day-message {
+      display: inline-block;
+      background: linear-gradient(90deg, #ffe6f7, #e6f7ff);
+      color: #b45fc3;
+      padding: clamp(12px, 2.5vw, 24px) clamp(16px, 4vw, 32px);
+      border-radius: 14px;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(180,95,195,0.12);
+      font-size: clamp(1.4em, 6vw, 2.4em);
+      line-height: 1.1;
+      margin: 0 auto;
+    }
+    @media (max-width: 480px) {
+      .container {
+        max-width: 99vw;
+        padding: 2vw 1vw;
+      }
+      h1 {
+        font-size: clamp(1.2em, 8vw, 2em);
+      }
+      .poem {
+        font-size: clamp(1em, 4vw, 1.2em);
+      }
+      .event-details, .parents, .footer-text {
+        font-size: clamp(0.95em, 2.5vw, 1em);
+      }
+      .countdown-item {
+        min-width: 32vw;
+        padding: 6px 2vw;
+      }
+    }
+  </style>
+</head>
+<body style="background-image: url('fondo.png'); /* Reemplaza con la ruta de tu imagen */
+        background-repeat: no-repeat; /* Evita que la imagen se repita */
+        background-size: cover; /* La imagen cubre toda la pantalla */
+        background-position: center; /* Centra la imagen */
+        background-attachment: fixed; /* Mantiene la imagen fija al hacer scroll (opcional) */
+        height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
+        margin: 0; /* Elimina el margen por defecto del body */">
+  <div class="container">
+    <!-- Flores en las esquinas -->
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+
+    <h1>Mis XV Años<br>Natalia Melanie</h1>
+    <h1>Y</h1>
+    <h1>Mis XVII Años<br>Santiago David</h1>
+    <div class="poem">
+      "Hoy la vida nos regala<br>
+      dos motivos para celebrar,<br>
+      sus XV y sus XVII<br>
+      con alegría sin igual.<br>
+      <br>
+      Ella florece en quince años,<br>
+      él camina hacia su andar,<br>
+      y juntos abren sus sueños<br>
+      que desean compartir y brindar.<br>
+      <br>
+      Con cariño y mucha ilusión,<br>
+      te invitamos a esta celebración."
+    </div>
+    <hr>
+    <div class="parents">
+      Con amor, tus padres:<br>
+      <strong>Alondra Gómez Santiago</strong> <br>y <br><strong>Jorge Agrian de Vicente Santiago</strong>
+    </div>
+    <hr>
+    <div class="parents">
+      Nuestros Padrinos:<br>
+      <strong>Maria Daniela Martinez Mendoza</strong><br> y <br><strong>Oscar de Vicente de Jesus</strong>
+    </div>
+    <hr>
+    <div class="section event-details">
+      <div class="section-title">Ceremonia Religiosa</div>
+      <div class="info">Fecha: <strong>22 de Noviembre de 2025</strong></div>
+      <div class="info">Hora: <strong>14:00 hrs</strong></div>
+      <div class="info">Lugar: <strong>Iglesia Santa Maria De Guadalupe, Calle Vicente Guerrero, La Lira</strong></div>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1157.629612289286!2d-100.16354144400894!3d20.478485375941233!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d36c7144985bc7%3A0xeec399d0750fa230!2sIglesia%20Santa%20Maria%20De%20Guadalupe%2C%20La%20Lira!5e0!3m2!1ses-419!2smx!4v1757826498144!5m2!1ses-419!2smx" width="300 auto" height="300 auto" style="border-radius:25%;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <hr>
+    <div class="section event-details">
+      <div class="section-title">Recepción</div>
+      <div class="info">Hora: <strong>19:00 hrs</strong></div>
+      <div class="info">Lugar: <strong>Calle Emiliano Zapata s/n</strong></div>
+      <iframe class="direc"src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1984.2039017361235!2d-100.16190864069013!3d20.471992503055!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjDCsDI4JzIwLjAiTiAxMDDCsDA5JzQzLjkiVw!5e0!3m2!1ses-419!2smx!4v1754777639904!5m2!1ses-419!2smx" width="300 auto" height="300 auto" style="border-radius:25%;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <hr>
+    <h4>Tiempo restasnte para el evento</h4>
+    <div class="countdown" id="countdown">
+      <div class="countdown-item"><span id="days">0</span>Días</div>
+      <div class="countdown-item"><span id="hours">0</span>Hrs</div>
+      <div class="countdown-item"><span id="minutes">0</span>Min</div>
+      <div class="countdown-item"><span id="seconds">0</span>Seg</div>
+    </div>
+    <div class="footer-text">
+      ¡Esperamos contar con tu presencia!
+      <br>
+  <img src="flores.png" alt="" style="width: 240px; margin-top: 12px;">
+    </div>
+  </div>
+  <!-- Música de fondo (Pendiente) -->
+  <audio id="background-music" src="musica.mp3" autoplay loop></audio>
+  <script>
+    const eventDate = new Date('2024-11-22T00:00:00');
+    function updateCountdown() {
+      const now = new Date();
+      const diff = eventDate - now;
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML = '<div class="event-day-message" role="status">¡El gran día ha llegado!</div>';
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
