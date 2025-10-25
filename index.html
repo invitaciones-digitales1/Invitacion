@@ -188,6 +188,32 @@
       line-height: 1.1;
       margin: 0 auto;
     }
+    /* Botón fijo de audio (estático) */
+    .audio-toggle {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg,#b45fc3,#5f71c3);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      border: none;
+      cursor: pointer;
+      z-index: 9999;
+      transition: transform .15s ease, opacity .2s ease;
+    }
+    .audio-toggle:active { transform: scale(.97); }
+    .audio-toggle.playing { background: linear-gradient(135deg,#4ad6b5,#2ea59a); }
+
+    .audio{
+      visibility: hidden;
+    }
     @media (max-width: 480px) {
       .container {
         max-width: 99vw;
@@ -244,12 +270,12 @@
     <hr>
     <div class="parents">
       Con amor, tus padres:<br>
-      <strong>Alondra Gómez Santiago</strong> <br>y <br><strong>Jorge Agrian de Vicente Santiago</strong>
+      <strong>Jorge Agrian de Vicente Santiago</strong> <br>y <br><strong>Alondra Gómez Santiago</strong>
     </div>
     <hr>
     <div class="parents">
       Nuestros Padrinos:<br>
-      <strong>Maria Daniela Martinez Mendoza</strong><br> y <br><strong>Oscar de Vicente de Jesus</strong>
+      <strong>Oscar de Vicente de Jesus</strong><br> y <br><strong>Maria Daniela Martinez Mendoza</strong>
     </div>
     <hr>
     <div class="section event-details">
@@ -280,11 +306,63 @@
   <img src="flores.png" alt="" style="width: 240px; margin-top: 12px;">
     </div>
   </div>
-  <!-- Música de fondo (Pendiente) -->
-  <audio id="background-music" src="musica.mp3" autoplay loop></audio>
+  <!-- Música de fondo: soporte WAV y MP3 (controles para reproducir si el autoplay está bloqueado) -->
+  <audio class="audio" type="hidden" id="background-music" autoplay loop controls>
+    <source src="musica.wav" type="audio/wav">
+    <source src="musica.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Botón fijo estático para controlar la música -->
+  <button id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Reproducir música">▶</button>
+
   <script>
     const eventDate = new Date('2025-11-22T00:00:00');
     function updateCountdown() {
+        // Control de audio: intento de autoplay y botón fijo (play/pause)
+  document.addEventListener('DOMContentLoaded', function () {
+    const audio = document.getElementById('background-music');
+    const btn = document.getElementById('audio-toggle');
+
+    if (!audio || !btn) return;
+
+    function setPlaying(isPlaying) {
+      if (isPlaying) {
+        btn.textContent = '⏸';
+        btn.classList.add('playing');
+        btn.setAttribute('aria-pressed', 'true');
+      } else {
+        btn.textContent = '▶';
+        btn.classList.remove('playing');
+        btn.setAttribute('aria-pressed', 'false');
+      }
+    }
+
+    // Click del botón: alterna play/pause
+    btn.addEventListener('click', function () {
+      if (audio.paused) {
+        audio.play().then(() => {
+          setPlaying(true);
+        }).catch(() => {
+          setPlaying(!audio.paused);
+        });
+      } else {
+        audio.pause();
+        setPlaying(false);
+      }
+    });
+
+    // Mantener el estado según eventos del audio
+    audio.addEventListener('play', () => setPlaying(true));
+    audio.addEventListener('pause', () => setPlaying(false));
+    audio.addEventListener('ended', () => setPlaying(false));
+
+    // Intentamos autoplay al cargar
+    audio.play().then(() => {
+      setPlaying(true);
+    }).catch((err) => {
+      setPlaying(false);
+    });
+  });
       const now = new Date();
       const diff = eventDate - now;
       if (diff <= 0) {
